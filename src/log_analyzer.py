@@ -70,8 +70,22 @@ def main():
 	if lineas is None:
 		return
 
-	for linea in lineas:
-		print(linea, end="")
+	for numero, linea in enumerate(lineas, start=1):
+		resultado = analizar_linea(linea)
+		nivel = resultado["nivel"] if resultado["nivel"] is not None else "No detectado"
+		fecha = resultado["fecha"] if resultado["fecha"] is not None else "No detectada"
+		nivel_valido = "Si" if resultado["nivel_valido"] else "No"
+		fecha_valida = "Si" if resultado["fecha_valida"] else "No"
+		mensaje_valido = "Si" if resultado["mensaje_valido"] else "No"
+		estado_linea = "Valida" if resultado["valida"] else "Malformada"
+
+		print(f"Linea {numero}:")
+		print(f"  Nivel detectado: {nivel}")
+		print(f"  Fecha detectada: {fecha}")
+		print(f"  Nivel valido: {nivel_valido}")
+		print(f"  Fecha valida: {fecha_valida}")
+		print(f"  Mensaje valido: {mensaje_valido}")
+		print(f"  Estado: {estado_linea}")
 
 
 if __name__ == "__main__":
