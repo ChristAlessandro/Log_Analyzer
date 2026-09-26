@@ -14,6 +14,10 @@ def leer_archivo(ruta):
 		return archivo.readlines()
 
 
+def validar_nivel(nivel):
+	return nivel in ("INFO", "WARNING", "ERROR")
+
+
 def main():
 	ruta = seleccionar_archivo()
 	lineas = leer_archivo(ruta)
