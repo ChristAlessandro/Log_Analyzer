@@ -1,49 +1,94 @@
 # Log Analyzer
 
-Proyecto académico desarrollado en Python para analizar archivos de
-registros (logs) y generar un resumen de los eventos encontrados.
+## Descripción
+
+Log Analyzer es un script desarrollado en Python que permite analizar archivos de texto que contienen registros simulados de sistemas.
+
+El programa identifica el nivel de severidad de cada registro, valida las fechas y determina si las líneas cumplen con las reglas establecidas.
+
+El proyecto fue desarrollado utilizando inteligencia artificial como herramienta de apoyo, manteniendo las decisiones de validación y comportamiento bajo criterio del desarrollador.
+
+---
 
 ## Objetivo
 
-El programa permitirá seleccionar un archivo de texto y analizar cada
-una de sus líneas para identificar:
+Desarrollar una solución funcional en Python que permita:
 
-- Nivel de severidad.
-- Fecha.
-- Mensaje.
-- Líneas mal formateadas o incompletas.
+- Leer un archivo de texto seleccionado por el usuario.
+- Analizar cada línea del archivo.
+- Identificar los niveles `INFO`, `WARNING` y `ERROR`.
+- Validar las fechas.
+- Detectar líneas malformadas o incompletas.
+- Continuar procesando el archivo aunque existan líneas con errores.
+- Generar un resumen estadístico de los resultados.
 
-## Niveles permitidos
+---
 
-- INFO
-- WARNING
-- ERROR
+## Reglas de validación
 
-## Formato esperado
+Las reglas fueron definidas antes de solicitar a la IA la implementación del código.
 
-```text
-[NIVEL] YYYY-MM-DD Mensaje
+### Nivel de severidad
 
-## Diseño del programa
+Solamente se reconocen los siguientes niveles:
 
-El programa se dividirá en funciones con responsabilidades específicas.
+- `INFO`
+- `WARNING`
+- `ERROR`
 
-### Funciones principales
+Cualquier otro nivel, por ejemplo `DEBUG`, se considera inválido.
 
-- `seleccionar_archivo()`: solicita al usuario la ruta del archivo que desea analizar.
-- `leer_archivo()`: abre el archivo y obtiene sus líneas para posteriormente analizarlas.
-- `analizar_linea()`: analiza individualmente cada línea y coordina las diferentes validaciones.
-- `validar_nivel()`: comprueba si el nivel de severidad pertenece a los niveles permitidos.
-- `validar_fecha()`: comprueba si la fecha cumple con el formato establecido y representa una fecha real.
-- `mostrar_resumen()`: presenta en consola los resultados obtenidos durante el análisis.
-- `main()`: coordina el flujo general del programa.
+### Fecha
 
-### Decisiones de diseño
+La fecha debe cumplir exactamente con el formato:
 
-Se decidió mantener separadas las funciones de selección y lectura del archivo para separar la interacción con el usuario de la gestión del archivo.
+`YYYY-MM-DD`
 
-Las validaciones de nivel y fecha también permanecerán separadas para facilitar su comprobación y pruebas independientes.
+Además, debe representar una fecha real del calendario.
 
-Las funciones de validación no serán responsables de mostrar información en consola ni de modificar directamente las estadísticas. Su responsabilidad será únicamente determinar si el dato analizado cumple con las reglas establecidas.
+Por ejemplo:
 
-La función `analizar_linea()` será responsable de utilizar estas validaciones para determinar el estado de cada registro.
+- `2025-01-10` → válida
+- `2025-02-30` → inválida
+- `2025-99-99` → inválida
+- `10-01-2025` → inválida
+
+### Mensaje
+
+Cada registro debe contener un mensaje.
+
+Si el mensaje está ausente o vacío, la línea se considera malformada.
+
+### Información faltante
+
+Cuando una línea contiene información faltante o inválida, se marca como malformada, pero el programa continúa procesando las demás líneas.
+
+### Conteo de eventos
+
+Se considera evento cualquier línea que contenga un nivel de severidad reconocido (`INFO`, `WARNING` o `ERROR`), aunque posteriormente la fecha o el mensaje resulten inválidos.
+
+Por ejemplo:
+
+`[ERROR] 2025-99-99 Error de conexión`
+
+Se contabiliza como:
+
+- 1 evento
+- 1 ERROR
+- 1 línea malformada
+
+Una línea con un nivel desconocido no se contabiliza como evento, pero sí como malformada.
+
+---
+
+## Estructura del proyecto
+
+Log_Analyzer/
+├── src/
+│   └── log_analyzer.py
+├── tests/
+│   ├── log_bien_formado.txt
+│   └── log_formato_malo.txt
+├── docs/
+│   └── reflexion_tecnica.md
+└── README.md
