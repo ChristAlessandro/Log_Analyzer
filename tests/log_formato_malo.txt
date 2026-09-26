@@ -1,0 +1,8 @@
+[INFO] 2025-01-10 User logged in
+[ERROR] Failed to connect to database
+[WARNING] 2025-99-99 Invalid password attempt
+[DEBUG] 2025-01-10 Debug message
+
+[INFO] 2025-01-12
+Texto sin formato
+[ERROR] 2025-02-30 Invalid date
