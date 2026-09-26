@@ -63,6 +63,35 @@ def analizar_linea(linea):
 	}
 
 
+def generar_estadisticas(resultados):
+	total_eventos = 0
+	total_info = 0
+	total_warning = 0
+	total_error = 0
+	total_malformadas = 0
+
+	for resultado in resultados:
+		if resultado["nivel_valido"]:
+			total_eventos += 1
+			if resultado["nivel"] == "INFO":
+				total_info += 1
+			elif resultado["nivel"] == "WARNING":
+				total_warning += 1
+			elif resultado["nivel"] == "ERROR":
+				total_error += 1
+
+		if not resultado["valida"]:
+			total_malformadas += 1
+
+	return {
+		"total_eventos": total_eventos,
+		"total_info": total_info,
+		"total_warning": total_warning,
+		"total_error": total_error,
+		"total_malformadas": total_malformadas,
+	}
+
+
 def main():
 	ruta = seleccionar_archivo()
 	lineas = leer_archivo(ruta)
