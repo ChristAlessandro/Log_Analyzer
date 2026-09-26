@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 
 
 def seleccionar_archivo():
@@ -16,6 +17,15 @@ def leer_archivo(ruta):
 
 def validar_nivel(nivel):
 	return nivel in ("INFO", "WARNING", "ERROR")
+
+
+def validar_fecha(fecha):
+	try:
+		fecha_parseada = datetime.strptime(fecha, "%Y-%m-%d")
+	except ValueError:
+		return False
+
+	return fecha_parseada.strftime("%Y-%m-%d") == fecha
 
 
 def main():
